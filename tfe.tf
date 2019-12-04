@@ -8,6 +8,8 @@ variable "workspace_name" {}
 variable "org_name" {}
 variable "aws_access_key_id" {}
 variable "aws_secret_access_key" {}
+variable "tfe_token" {}
+variable "vault_token" {}
 
 # create new workspace
 resource "tfe_workspace" "ws" {
@@ -24,8 +26,32 @@ resource "tfe_variable" "aws_access_key_id" {
 }
 
 resource "tfe_variable" "aws_secret_access_key" {
-	key = "SomeVariable"
+	key = "AWS_SECRET_ACCESS_KEY"
 	value = var.aws_secret_access_key
+	category = "env"
+	sensitive = true
+	workspace_id = tfe_workspace.ws.id
+}
+
+resource "tfe_variable" "confirm_destroy" {
+	key = "CONFIRM_DESTROY"
+	value = 1
+	category = "env"
+	sensitive = false
+	workspace_id = tfe_workspace.ws.id
+}
+
+resource "tfe_variable" "vault_token" {
+	key = "VAULT_TOKEN"
+	value = var.vault_token
+	category = "env"
+	sensitive = true
+	workspace_id = tfe_workspace.ws.id
+}
+
+resource "tfe_variable" "tfe_token" {
+	key = "TFE_TOKEN"
+	value = var.tfe_token
 	category = "env"
 	sensitive = true
 	workspace_id = tfe_workspace.ws.id
