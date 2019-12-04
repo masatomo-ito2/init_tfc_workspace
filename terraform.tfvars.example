@@ -1,0 +1,6 @@
+workspace_name = "VAULT_DEMO_ON_AWS" 
+org_name = "masa_org"
+aws_access_key_id = "access_key"
+aws_secret_access_key = "secret_key"
+tfe_token = "tfe_token"
+vault_token = "vault_token"
